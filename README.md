@@ -8,7 +8,7 @@
 
 ## 介绍
 
-MikuOne-NEXT 是一个基于 Shell 的系统管理工具，提供多种常用软件的安装、卸载、管理Proot容器以及垃圾清理等功能。适用于希望快速配置开发环境或优化系统的用户。
+SakiSP-NEXT 是一个基于 Shell 的系统管理工具，提供多种常用软件的安装、卸载、管理Proot容器以及垃圾清理等功能。适用于希望快速配置开发环境或优化系统的用户。
 
 ## 软件架构
 
@@ -30,7 +30,7 @@ MikuOne-NEXT 是一个基于 Shell 的系统管理工具，提供多种常用软
 
 运行脚本：
 ```bash
-bash ~/MikuOne-NEXT/sakispnext.sh
+bash ~/SakiSP-NEXT/sakispnext.sh
 ```
 
 根据菜单选择所需功能（如安装软件）
