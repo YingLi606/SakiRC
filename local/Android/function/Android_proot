@@ -119,7 +119,7 @@ install_proot() {
 		exit
 		;;
 	esac
-	mkdir -p "${HOME}/.termux/sakisp-next/proot"
+	mkdir -p "${HOME}/.termux/.sakisp-next/proot"
 	Proot_os_download_source="https://sgp1lxdmirror01.do.letsbuildthe.cloud/images"
 	open_proot_os_list=$(
 		whiptail --title "选择功能" --menu "proot容器按自己需求来" 15 60 7 \
@@ -203,16 +203,16 @@ install_proot() {
 	echo -e "${INFO}您可以使用${RED}rm -rfv $download_file${RES}来节省存储空间"
 
 	unset LD_PRELOAD
-	mkdir -p ${HOME}/.termux/sakisp-next/proot/${os_name}
-	log "解压\"${HOME}/SakiSP-NEXT/download/${os_name}.tar.xz\""
-	proot --link2symlink tar --overwrite -xJf ${HOME}/SakiSP-NEXT/download/${os_name}.tar.xz -C ${HOME}/.termux/sakisp-next/proot/${os_name}/ --exclude='dev' || :
-	chmod 777 "${HOME}/.termux/sakisp-next/proot/${os_name}/root/"
-	chmod 777 "${HOME}/.termux/sakisp-next/proot/${os_name}/proc/"
+	mkdir -p ${HOME}/.termux/.sakisp-next/proot/${os_name}
+	log "解压\"${HOME}/.sakisp-next/download/${os_name}.tar.xz\""
+	proot --link2symlink tar --overwrite -xJf ${HOME}/SakiSP-NEXT/download/${os_name}.tar.xz -C ${HOME}/.termux/.sakisp-next/proot/${os_name}/ --exclude='dev' || :
+	chmod 777 "${HOME}/.termux/.sakisp-next/proot/${os_name}/root/"
+	chmod 777 "${HOME}/.termux/.sakisp-next/proot/${os_name}/proc/"
 	echo -e "${GREEN}复制脚本到容器${RES}"
 	log "复制脚本到容器"
-	mkdir -p ${HOME}/.termux/sakisp-next/proot/${os_name}/root/.sakisp-next
-	mkdir -p ${HOME}/.termux/sakisp-next/.重要文件夹/sys/.empty
-	mkdir -p ${HOME}/.termux/sakisp-next/.重要文件夹/dev/shm
+	mkdir -p ${HOME}/.termux/.sakisp-next/proot/${os_name}/root/.sakisp-next
+	mkdir -p ${HOME}/.termux/.sakisp-next/.重要文件夹/sys/.empty
+	mkdir -p ${HOME}/.termux/.sakisp-next/.重要文件夹/dev/shm
 	cp -r ${HOME}/.sakisp-next/config ${HOME}/.termux/sakisp-next/proot/${os_name}/root/.sakisp-next
 	cp -r ${HOME}/.sakisp-next/function ${HOME}/.termux/sakisp-next/proot/${os_name}/root/.sakisp-next
 	cp -r ${HOME}/.sakisp-next/local ${HOME}/.termux/sakisp-next/proot/${os_name}/root/.sakisp-next
@@ -223,16 +223,16 @@ install_proot() {
 	cp ${HOME}/.sakisp-next/function/proot_optimization ${HOME}/.termux/sakisp-next/proot/${os_name}/root/优化.sh
 	proot \
 		--link2symlink -0 \
-		--rootfs=${HOME}/.termux/sakisp-next/proot/${os_name}/ \
+		--rootfs=${HOME}/.termux/.sakisp-next/proot/${os_name}/ \
 		--bind=/dev \
 		--bind=/sys \
 		--bind=/proc \
-		--bind="${HOME}/.termux/sakisp-next/proot/${os_name}/proc/.loadavg:/proc/loadavg" \
-		--bind="${HOME}/.termux/sakisp-next/proot/${os_name}/proc/.version:/proc/version" \
-		--bind="${HOME}/.termux/sakisp-next/proot/${os_name}/proc/.uptime:/proc/uptime" \
-		--bind="${HOME}/.termux/sakisp-next/proot/${os_name}/proc/.stat:/proc/stat" \
-		--bind="${HOME}/.termux/sakisp-next/proot/${os_name}/proc/.vmstat:/proc/vmstat" \
-		--bind="${HOME}/.termux/sakisp-next/proot/${os_name}/proc/.sysctl_entry_cap_last_cap:/proc/sysctl_entry_cap_last_cap" \
+		--bind="${HOME}/.termux/.sakisp-next/proot/${os_name}/proc/.loadavg:/proc/loadavg" \
+		--bind="${HOME}/.termux/.sakisp-next/proot/${os_name}/proc/.version:/proc/version" \
+		--bind="${HOME}/.termux/.sakisp-next/proot/${os_name}/proc/.uptime:/proc/uptime" \
+		--bind="${HOME}/.termux/.sakisp-next/proot/${os_name}/proc/.stat:/proc/stat" \
+		--bind="${HOME}/.termux/.sakisp-next/proot/${os_name}/proc/.vmstat:/proc/vmstat" \
+		--bind="${HOME}/.termux/.sakisp-next/proot/${os_name}/proc/.sysctl_entry_cap_last_cap:/proc/sysctl_entry_cap_last_cap" \
 		--kernel-release="5.15.0" \
 		-w /root /usr/bin/env \
 		-i HOME=/root \
@@ -257,7 +257,7 @@ install_proot() {
 
 }
 start_proot() {
-	list_dir ${HOME}/.termux/sakisp-next/proot
+	list_dir ${HOME}/.termux/.sakisp-next/proot
 	case $user_choice in
 	0)
 		echo -e "${RED}quit${RES}"
@@ -282,15 +282,15 @@ start_proot() {
 			--bind=/data/app \
 			--bind=/proc:/proc \
 			--bind=/data/data/com.termux/files/home/.termux/共享文件夹:/termux共享文件夹 \
-			--bind=${HOME}/.termux/sakisp-next/proot/${os_name}/proc/.sysctl_inotify_max_user_watches:/proc/sys/fs/inotify/max_user_watches \
-			--bind=${HOME}/.termux/sakisp-next/proot/${os_name}/proc/.sysctl_entry_cap_last_cap:/proc/sys/kernel/cap_last_cap \
-			--bind=${HOME}/.termux/sakisp-next/proot/${os_name}/proc/.vmstat:/proc/vmstat \
-			--bind=${HOME}/.termux/sakisp-next/proot/${os_name}/proc/.version:/proc/version \
-			--bind=${HOME}/.termux/sakisp-next/proot/${os_name}/proc/.uptime:/proc/uptime \
-			--bind=${HOME}/.termux/sakisp-next/proot/${os_name}/proc/.stat:/proc/stat \
-			--bind=${HOME}/.termux/sakisp-next/proot/${os_name}/proc/.loadavg:/proc/loadavg \
-			--bind=${HOME}/.termux/sakisp-next/.重要文件夹/sys/.empty:/sys/fs/selinux \
-			--bind=${HOME}/.termux/sakisp-next/.重要文件夹/dev/shm:/dev/shm \
+			--bind=${HOME}/.termux/.sakisp-next/proot/${os_name}/proc/.sysctl_inotify_max_user_watches:/proc/sys/fs/inotify/max_user_watches \
+			--bind=${HOME}/.termux/.sakisp-next/proot/${os_name}/proc/.sysctl_entry_cap_last_cap:/proc/sys/kernel/cap_last_cap \
+			--bind=${HOME}/.termux/.sakisp-next/proot/${os_name}/proc/.vmstat:/proc/vmstat \
+			--bind=${HOME}/.termux/.sakisp-next/proot/${os_name}/proc/.version:/proc/version \
+			--bind=${HOME}/.termux/.sakisp-next/proot/${os_name}/proc/.uptime:/proc/uptime \
+			--bind=${HOME}/.termux/.sakisp-next/proot/${os_name}/proc/.stat:/proc/stat \
+			--bind=${HOME}/.termux/.sakisp-next/proot/${os_name}/proc/.loadavg:/proc/loadavg \
+			--bind=${HOME}/.termux/.sakisp-next/.重要文件夹/sys/.empty:/sys/fs/selinux \
+			--bind=${HOME}/.termux/.sakisp-next/.重要文件夹/dev/shm:/dev/shm \
 			--bind=/sys \
 			--bind=/proc/self/fd/2:/dev/stderr \
 			--bind=/proc/self/fd/1:/dev/stdout \
@@ -306,7 +306,7 @@ start_proot() {
 			--kill-on-exit \
 			--cwd=/root \
 			--change-id=0:0 \
-			--rootfs=${HOME}/.termux/sakisp-next/proot/${os_name}/ \
+			--rootfs=${HOME}/.termux/.sakisp-next/proot/${os_name}/ \
 			/usr/bin/env -i \
 			PATH=/usr/local/sbin:/usr/local/bin:/bin:/usr/bin:/sbin:/usr/sbin:/usr/games:/usr/local/games \
 			TERM=xterm-256color \
@@ -354,7 +354,7 @@ start_proot() {
 	esac
 }
 rm_proot() {
-	list_dir ${HOME}/.termux/sakisp-next/proot
+	list_dir ${HOME}/.termux/.sakisp-next/proot
 	case $user_choice in
 	0)
 		echo -e "${RED}quit${RES}"
@@ -377,8 +377,8 @@ rm_proot() {
 		if [ $user_sum -eq $correct_sum ]; then
 			echo -e "验证通过！"
 			sleep 2
-			chmod 777 -R "${HOME}/.termux/sakisp-next/proot/${os_name}/"
-			rm -rfv "${HOME}/.termux/sakisp-next/proot/${os_name}/"
+			chmod 777 -R "${HOME}/.termux/.sakisp-next/proot/${os_name}/"
+			rm -rfv "${HOME}/.termux/.sakisp-next/proot/${os_name}/"
 			# 在这里添加你想要执行的命令
 		else
 			echo -e "错误！你输入的和不正确。删除程序将不执行。"
