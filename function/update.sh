@@ -106,7 +106,7 @@ if [ "$(printf '%s\n' "$REMOTE_VERSION" "$LOCAL_VERSION" | sort -V | tail -n1)" 
 	if [ "${qqBot}" != "" ]; then
 		Modify_the_variable qqBot ${qqBot} ${HOME}/SakiSP-NEXT/config/config.sh
 	fi
-	chmod 777 ${HOME}/SakiSP-NEXT/mikunext.sh
+	chmod 777 ${HOME}/SakiSP-NEXT/sakispnext.sh
 	echo "更新完成！重启脚本后，请在主菜单里退出脚本且重新启动并选择默认更新源！将在3秒后重启脚本... （当前版本: $REMOTE_VERSION）"
 	sleep 3
 	log 更新成功
