@@ -41,27 +41,44 @@ open_debian_os_list() {
 		;;
 	esac
 }
+
 open_kali_os_list() {
 	clear
 	sleep 0.1
 	echo -e "\n\e[90m📌 \e[1m【选择Kali系统版本】\e[0m"
 	sleep 0.1
-	echo -e "\e[95m1. 🟣 Current\e[0m"
+	echo -e "\e[95m1. 🟣 Kali\e[0m"
 	sleep 0.1
 	echo -e "\e[91m0. 🔴 退出\e[0m"
 	sleep 0.1
 	read -p "请输入对应数字选择：" kali_os_list
-	case ${debian_os_list} in
+	case ${kali_os_list} in
     1)
-		os_name=Current_Kali
+		os_name=Kali
 		Download_proot_NAME=$(curl -s "${Proot_os_download_source}/kali/current/${archurl}/default/" | grep -oP '<a href="[^"]*">\K[^<]*' | sed -n '2s|/$||p')
 		Download_proot_url=${Proot_os_download_source}/kali/current/${archurl}/default/${Download_proot_NAME}/rootfs.tar.xz
+		download_file="${HOME}/SakiSP-NEXT/download/${os_name}.tar.xz"
+		mkdir -p "${HOME}/SakiSP-NEXT/download"
+		echo -e "\e[94m ℹ️  正在下载Kali系统镜像... \e[0m"
+		if curl -L -C - -# -o "${download_file}" "${Download_proot_url}"; then
+			echo -e "\e[92m ✅ Kali系统镜像下载成功，存储路径：${download_file} \e[0m"
+		else
+			echo -e "\e[91m ❌ Kali系统镜像下载失败，尝试备用链接... \e[0m"
+			Download_proot_url="https://dl.gancmcs.top/${Download_proot_url}"
+			if curl -L -C - -# -o "${download_file}" "${Download_proot_url}"; then
+				echo -e "\e[92m ✅ 备用链接下载成功，存储路径：${download_file} \e[0m"
+			else
+				echo -e "\e[91m ❌ 备用链接下载也失败，请检查网络！ \e[0m"
+				exit 1
+			fi
+		fi
 		;;
 	*)
 		exit 1
 		;;
 	esac
 }
+
 open_ubuntu_os_list() {
 	clear
 	sleep 0.1
