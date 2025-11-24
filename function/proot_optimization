@@ -152,7 +152,7 @@ if [ $whiptail_available -eq 1 ]; then
     whiptail --title "安装SakiSP" --yesno "是否需要安装SakiSP？该工具可用于很大用途" 10 60
     if [ $? -eq 0 ]; then
         echo -e "${INFO} 用户选择安装SakiSP，正在克隆仓库...${RES}"
-        git clone https://gh.xmly.dev/https://github.com.xingLi606/SakiSP.git
+        git clone https://gh.xmly.dev/https://github.com/YingLi606/SakiSP.git
         sleep 2
         clear
         echo -e "${SUSSEC} SakiSP已完成安装步骤，即将进入下一步...${RES}"
