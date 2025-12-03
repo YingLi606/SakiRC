@@ -188,6 +188,7 @@ start_MC_SERVER() {
 		;;
 	esac
 }
+
 rm_MC_SERVER() {
 	log "准备删除mcserver"
 	list_dir ${HOME}/.termux/SakiSP-NEXT/MCserver/
@@ -201,7 +202,6 @@ rm_MC_SERVER() {
 			exit
 		fi
 		rm_MC_SERVER_class=${list_items[$((user_choice - 1))]}
-		#核心
 		;;
 	esac
 	list_dir ${HOME}/.termux/SakiSP-NEXT/MCserver/${rm_MC_SERVER_class}
@@ -214,28 +214,44 @@ rm_MC_SERVER() {
 		if [ ! $? = 0 ]; then
 			exit
 		fi
-		num1=$((RANDOM % 100))
-		num2=$((RANDOM % 100))
-		# 读取用户输入
-		read -e -p "${num1}+${num2}=?" user_sum
-		# 计算正确的和
-		correct_sum=$(($num1 + $num2))
-		# 检查用户输入是否正确
+		op_type=$((RANDOM % 3 + 1))
+		case $op_type in
+			1)
+				num1=$((RANDOM % 100))
+				num2=$((RANDOM % 100))
+				op_symbol="+"
+				correct_sum=$(($num1 + $num2))
+				;;
+			2)
+				num1=$((RANDOM % 100 + 50))
+				num2=$((RANDOM % 50))
+				op_symbol="-"
+				correct_sum=$(($num1 - $num2))
+				;;
+			3)
+				num1=$((RANDOM % 20 + 1))
+				num2=$((RANDOM % 10 + 1))
+				op_symbol="×"
+				correct_sum=$(($num1 * $num2))
+				;;
+		esac
+		log "num1=$num1 op=$op_symbol num2=$num2"
+		read -e -p "🧮 人类验证：${num1}${op_symbol}${num2}=?" user_sum
+		log "user_sum=$user_sum"
 		if [ $user_sum -eq $correct_sum ]; then
-			echo -e "✅ 验证完成，您已证明你是人类，继续操作"
+			echo -e "\e[92m✅ 验证完成，您已证明你是人类，继续操作\e[0m"
 			sleep 2
 			rm -rfv "${HOME}/.termux/SakiSP-NEXT/MCserver/${rm_MC_SERVER_class}/${list_items[$((user_choice - 1))]}"
-			# 在这里添加你想要执行的命令
 			log "删除完成"
 		else
-			echo -e "❌ 错误！你输入的答案不正确。删除程序将不执行。"
+			echo -e "\e[91m❌ 错误！你输入的答案不正确。删除程序将不执行。\e[0m"
 			sleep 2
 			log "取消失败"
 		fi
 		;;
 	esac
-
 }
+
 Import_zip_MC_SERVER() {
 	log "准备导入zip格式的mcserver"
 	self_install zip 
