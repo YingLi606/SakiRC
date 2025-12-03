@@ -20,7 +20,7 @@ if whiptail --title "SakiSP-NEXT 卸载工具" --yesno "是否确认卸载 SakiS
 
     if [ -e "$PATH1" ]; then
         echo -e "${YELLOW}[*] 检测到 $PATH1，正在删除...${RESET}"
-        rm -rf "$PATH1"
+        rm -rvf "$PATH1"
         echo -e "${GREEN}[√] $PATH1 删除完成${RESET}"
     else
         echo -e "${YELLOW}[*] 未检测到 $PATH1，跳过删除${RESET}"
@@ -28,7 +28,7 @@ if whiptail --title "SakiSP-NEXT 卸载工具" --yesno "是否确认卸载 SakiS
 
     if [ -e "$PATH2" ]; then
         echo -e "${YELLOW}[*] 检测到 $PATH2，正在删除...${RESET}"
-        rm -rf "$PATH2"
+        rm -rvf "$PATH2"
         echo -e "${GREEN}[√] $PATH2 删除完成${RESET}"
     else
         echo -e "${YELLOW}[*] 未检测到 $PATH2，跳过删除${RESET}"
@@ -36,7 +36,7 @@ if whiptail --title "SakiSP-NEXT 卸载工具" --yesno "是否确认卸载 SakiS
 
     if [ -e "$PATH3" ]; then
         echo -e "${YELLOW}[*] 检测到 $PATH3，正在删除...${RESET}"
-        rm -rf "$PATH3"
+        rm -rvf "$PATH3"
         echo -e "${GREEN}[√] $PATH3 删除完成${RESET}"
     else
         echo -e "${YELLOW}[*] 未检测到 $PATH3，跳过删除${RESET}"
