@@ -220,26 +220,33 @@ rm_MC_SERVER() {
 				num1=$((RANDOM % 100))
 				num2=$((RANDOM % 100))
 				op_symbol="+"
-				correct_sum=$(($num1 + $num2))
+				correct_result=$(($num1 + $num2))
 				;;
 			2)
 				num1=$((RANDOM % 100 + 50))
 				num2=$((RANDOM % 50))
 				op_symbol="-"
-				correct_sum=$(($num1 - $num2))
+				correct_result=$(($num1 - $num2))
 				;;
 			3)
 				num1=$((RANDOM % 20 + 1))
 				num2=$((RANDOM % 10 + 1))
 				op_symbol="×"
-				correct_sum=$(($num1 * $num2))
+				correct_result=$(($num1 * $num2))
 				;;
 		esac
-		log "num1=$num1 op=$op_symbol num2=$num2"
-		read -e -p "🧮 人类验证：${num1}${op_symbol}${num2}=?" user_sum
-		log "user_sum=$user_sum"
-		if [ $user_sum -eq $correct_sum ]; then
-			echo -e "\e[92m✅ 验证完成，您已证明你是人类，继续操作\e[0m"
+		log "num1=$num1 op=$op_symbol num2=$num2 correct_result=$correct_result"
+		read -e -p "🧮 人类验证：${num1}${op_symbol}${num2}=?" user_input
+		log "user_input=$user_input"
+		if ! [[ "$user_input" =~ ^[0-9]+$ ]]; then
+			echo -e "\e[91m❌ 错误！请输入有效的数字答案\e[0m"
+			sleep 2
+			log "输入非数字，取消删除"
+			clear
+			exit 1
+		fi
+		if [ "$user_input" -eq "$correct_result" ]; then
+			echo -e "\e[92m✅ 验证完成，您已证明是人类，继续操作\e[0m"
 			sleep 2
 			rm -rfv "${HOME}/.termux/SakiSP-NEXT/MCserver/${rm_MC_SERVER_class}/${list_items[$((user_choice - 1))]}"
 			log "删除完成"
