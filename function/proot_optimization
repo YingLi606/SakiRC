@@ -34,7 +34,7 @@ detect_package_manager() {
         "fedora")
             echo "dnf"
             ;;
-        "arch"|"manjaro"|"endeavouros")
+        "archarm"|"manjaro"|"endeavouros")
             echo "pacman"
             ;;
         "opensuse"|"suse")
@@ -62,10 +62,17 @@ detect_package_manager() {
     esac
 }
 package_manager=$(detect_package_manager)
+current_distro=$(get_linux_distro)
 self_install() {
-    if ! command -v "$1" &>/dev/null; then
-        echo -e "${RED}未安装 $1，正在安装...${RES}"
-        $package_manager install -y "$1"
+    local pkg_manager=$1
+    local pkg_name=$2
+    if ! command -v "$pkg_name" &>/dev/null; then
+        echo -e "${RED}未安装 $pkg_name，正在安装...${RES}"
+        if [ "$pkg_manager" = "pacman" ]; then
+            $pkg_manager -S --noconfirm "$pkg_name"
+        else
+            $pkg_manager install -y "$pkg_name"
+        fi
     fi
 }
 hcjx() {
@@ -87,46 +94,46 @@ nameserver 1.2.4.8
 nameserver 240c::6666
 nameserver 240c::6644" >/etc/resolv.conf
 echo -e "${GREEN}尝试禁用无用检测${RES}"
-ln -s ~/SakiSP-NEXT/sakispnext.sh /usr/bin/sakispnext
-chmod 777 /usr/bin/sakispnext
+ln -s ~/SakiSP-NEXT/sakispnext.sh /usr/bin/sakispnext 2>/dev/null
+chmod 777 /usr/bin/sakispnext 2>/dev/null
 touch ~/.hushlogin
-$package_manager update -y &
-$package_manager upgrade -y
-Modify_the_variable last_time_aptup $(date +%s) ${HOME}/SakiSP-NEXT/config/config.sh
-current_distro=$(get_linux_distro)
-supported_distros=("ubuntu" "debian" "kali")
-whiptail_available=0
-if [[ " ${supported_distros[@]} " =~ " ${current_distro} " ]]; then
+if [ "$current_distro" = "archarm" ] || [ "$current_distro" = "manjaro" ] || [ "$current_distro" = "endeavouros" ]; then
+    echo -e "${INFO}先执行系统更新...${RES}"
+    pacman -Syu --noconfirm
+    echo -e "${INFO}系统更新完成，正在安装Arch依赖...${RES}"
+    pacman -S --noconfirm libnewt adobe-source-han-serif-cn-fonts wqy-zenhei wget git jq curl bc
+    echo -e "${SUSSEC}继续后续步骤${RES}"
+    echo -e "${INFO}正在配置Arch系统中文环境...${RES}"
+    sed -i 's/^#zh_CN.UTF-8 UTF-8/zh_CN.UTF-8 UTF-8/' /etc/locale.gen
+    locale-gen
+    echo "LANG=zh_CN.UTF-8" >/etc/locale.conf
+    echo -e "${SUSSEC}中文环境配置完成${RES}"
     if command -v whiptail >/dev/null 2>&1; then
         whiptail_available=1
     else
-        echo -e "${INFO}目标系统${current_distro}，检测到未安装whiptail，开始安装${RES}"
-        self_install whiptail
-        if command -v whiptail >/dev/null 2>&1; then
-            whiptail_available=1
-        else
-            echo -e "${WORRY}目标系统${current_distro}，whiptail安装失败，将跳过SakiSP安装询问${RES}"
-            whiptail_available=0
-        fi
+        echo -e "${WORRY}whiptail安装失败，将跳过SakiSP安装询问${RES}"
+        whiptail_available=0
     fi
 else
-    echo -e "${INFO}你的系统 ${current_distro} 暂不支持SakiSP安装，跳过whiptail检测与SakiSP安装${RES}"
     whiptail_available=0
+    if [ "$current_distro" = "ubuntu" ] || [ "$current_distro" = "debian" ] || [ "$current_distro" = "kali" ] || [ "$current_distro" = "centos" ] || [ "$current_distro" = "rocky" ]; then
+        echo -e "${INFO}正在安装对应依赖...${RES}"
+        self_install $package_manager language-pack-zh-hans
+        self_install $package_manager fonts-wqy-microhei
+        self_install $package_manager fonts-wqy-zenhei
+        self_install $package_manager glibc-langpack-zh
+        self_install $package_manager xfonts-wqy
+        self_install $package_manager ttf-wqy-zenhei
+        self_install $package_manager wget
+        self_install $package_manager git
+        self_install $package_manager jq
+        self_install $package_manager curl
+        self_install $package_manager bc
+    fi
 fi
-self_install language-pack-zh-hans
-self_install fonts-wqy-microhei
-self_install fonts-wqy-zenhei
-self_install glibc-langpack-zh
-self_install xfonts-wqy
-self_install ttf-wqy-zenhei
-self_install wget
-self_install git
-self_install jq
-self_install curl
-self_install bc
-echo -e "${INFO}准备检测系统发行版"
+echo -e "${INFO}准备检测系统发行版${RES}"
 sleep 2
-if [ -f /etc/os-release ]; then
+if [ -f /etc/os-release ] && [ "$current_distro" != "archarm" ] && [ "$current_distro" != "manjaro" ] && [ "$current_distro" != "endeavouros" ]; then
     . /etc/os-release
     case $ID in
         ubuntu|debian|kali)
@@ -143,7 +150,7 @@ if [ -f /etc/os-release ]; then
             clear
             ;;
     esac
-else
+elif [ "$current_distro" != "archarm" ] && [ "$current_distro" != "manjaro" ] && [ "$current_distro" != "endeavouros" ]; then
     echo -e "${ERROR} 无法检测系统发行版，跳过语言配置步骤${RES}"
     sleep 2
     clear
@@ -152,7 +159,7 @@ if [ $whiptail_available -eq 1 ]; then
     whiptail --title "安装SakiSP" --yesno "是否需要安装SakiSP？该工具可用于很大用途" 10 60
     if [ $? -eq 0 ]; then
         echo -e "${INFO} 用户选择安装SakiSP，正在克隆仓库...${RES}"
-        git clone https://gh.xmly.dev/https://github.com/YingLi606/SakiSP.git
+        git clone https://gh.xmly.dev/https://github.com/YingLi606/SakiSP.git 2>/dev/null
         sleep 2
         clear
         echo -e "${SUSSEC} SakiSP已完成安装步骤，即将进入下一步...${RES}"
@@ -167,28 +174,36 @@ sleep 3
 sudo bash -c "bash <(curl -sSL https://linuxmirrors.cn/main.sh)" && echo -e "${GREEN}✅ 软件源切换执行完成，正在进入下一步...${RES}"
 sleep 2
 clear
-if [ $whiptail_available -eq 1 ]; then
-    whiptail --title "安装TMOE TOOL" --yesno "是否需要安装TMOE TOOL？" 10 60
-    if [ $? -eq 0 ]; then
-        echo -e "${INFO} 用户选择安装TMOE TOOL，正在准备开始...（建议都输入Y,国内选择Gitee）${RES}"
-        sleep 2
-        sudo bash -c "$(curl -L https://gitee.com/mo2/linux/raw/2/2)"
-        sleep 2
-        clear
-        echo -e "${SUSSEC} TMOE TOOL已完成安装步骤！请重新启动脚本且启动容器${RES}"
-        sleep 3
-    else
-        clear
-        echo -e "${INFO} 用户选择无需安装TMOE TOOL，该步骤跳过，请重新启动脚本且启动容器${RES}"
-        sleep 3
-    fi
-else
-    echo -e "${INFO}开始安装TMOE TOOL...（建议都输入Y,国内选择Gitee）${RES}"
+sleep 0.1
+echo -e "─────────────────────────────────────────"
+echo -e "  📦  TMOE TOOL 安装向导  📦              "
+echo -e "─────────────────────────────────────────"
+echo -e "  ✅  建议国内用户选择 Gitee 源           "
+echo -e "${WARN}  ✅  安装过程中建议全程输入 Y 确认       ${RES}"
+echo -e "─────────────────────────────────────────"
+
+echo -e "\n${SUSSEC}❓ 是否需要安装 TMOE TOOL？${RES}"
+echo -e "${INFO}📌 请输入：${SUSSEC}y${RES}（安装） / ${WARN}n${RES}（跳过）"
+read -r user_choice
+
+if [[ "$user_choice" =~ ^[Yy]$ ]]; then
+    echo -e "\n${INFO}🚀 用户选择安装，正在准备启动安装程序...${RES}"
     sleep 2
     sudo bash -c "$(curl -L https://gitee.com/mo2/linux/raw/2/2)"
     sleep 2
     clear
-    echo -e "${SUSSEC} TMOE TOOL已完成安装步骤！请重新启动脚本且启动容器${RES}"
+    echo -e "─────────────────────────────────────────"
+    echo -e "${SUSSEC}  ✅  TMOE TOOL 安装完成！                ${RES}"
+    echo -e "${INFO}  📢  请重新启动脚本并启动容器           ${RES}"
+    echo -e "─────────────────────────────────────────"
+    sleep 3
+else
+    clear
+    echo -e "─────────────────────────────────────────"
+    echo -e "${WARN}  ⏭️  用户选择跳过 TMOE TOOL 安装         ${RES}"
+    echo -e "${INFO}  📢  请重新启动脚本并启动容器           ${RES}"
+    echo -e "─────────────────────────────────────────"
     sleep 3
 fi
 exit
+
