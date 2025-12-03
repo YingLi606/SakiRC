@@ -169,7 +169,7 @@ if [ $whiptail_available -eq 1 ]; then
         echo -e "${INFO} 用户选择无需安装SakiSP，该步骤跳过${RES}"
     fi
 fi
-echo -e "${INFO}现在，请选择你需要更换的国内软件源（全Linux系统支持，进入过程可能需要一段时间，请耐心等待）${RES}"
+echo -e "${INFO}现在，请选择你需要更换的国内软件源${RES}"
 sleep 3
 sudo bash -c "bash <(curl -sSL https://linuxmirrors.cn/main.sh)" && echo -e "${GREEN}✅ 软件源切换执行完成，正在进入下一步...${RES}"
 sleep 2
@@ -183,7 +183,7 @@ echo -e "  ✅  安装过程中建议全程输入 Y 确认       "
 echo -e "─────────────────────────────────────────"
 
 echo -e "\n❓ 是否需要安装 TMOE TOOL？${RES}"
-echo -e "${📌 请输入：${SUSSEC}y${RES}（安装） / ${WARN}n${RES}（跳过）"
+echo -e "📌 请输入：(y/n)"
 read -r user_choice
 
 if [[ "$user_choice" =~ ^[Yy]$ ]]; then
@@ -193,15 +193,15 @@ if [[ "$user_choice" =~ ^[Yy]$ ]]; then
     sleep 2
     clear
     echo -e "─────────────────────────────────────────"
-    echo -e "  ✅  TMOE TOOL 安装完成！                ${RES}"
-    echo -e "  📢  请重新启动脚本并启动容器           ${RES}"
+    echo -e "  ✅  TMOE TOOL 安装完成！                "
+    echo -e "  📢  请重新启动脚本并启动容器           "
     echo -e "─────────────────────────────────────────"
     sleep 3
 else
     clear
     echo -e "─────────────────────────────────────────"
-    echo -e "  ⏭️  用户选择跳过 TMOE TOOL 安装         ${RES}"
-    echo -e "  📢  请重新启动脚本并启动容器           ${RES}"
+    echo -e "  ⏭️  用户选择跳过 TMOE TOOL 安装         "
+    echo -e "  📢  请重新启动脚本并启动容器           "
     echo -e "─────────────────────────────────────────"
     sleep 3
 fi
