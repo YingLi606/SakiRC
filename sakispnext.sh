@@ -95,7 +95,7 @@ validity_git() {
 			;;
 		*)
 			echo -e " 未选择默认修改为 ${YELLOW}Github${RES} "
-			Modify_the_variable rawgit "https:\/\/raw.githubusercontent.com\/MIt-gancm\/Autumn-leaves\/refs\/heads\/main\/" ${HOME}/SakiSP-NEXT/config/config.sh
+			Modify_the_variable rawgit "https:\/\/raw.githubusercontent.com\/YingLi606\/SakiSP-NEXT\/refs\/heads\/main\/" ${HOME}/SakiSP-NEXT/config/config.sh
 			return 0
 			;;
 		esac

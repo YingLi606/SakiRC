@@ -82,17 +82,13 @@ hcjx() {
 echo -e "${INFO}正在优化系统，请勿退出！${RES}"
 echo "127.0.0.1 localhost" >/etc/hosts
 mkdir -p /run/systemd/resolve
-echo -e "${GREEN}正在配置DNS${RES}"
-echo -e "nameserver 114.114.114.114
-nameserver 114.114.115.115
-nameserver 1.2.4.8
-nameserver 240c::6666
-nameserver 240c::6644" >/run/systemd/resolve/stub-resolv.conf
-echo -e "nameserver 114.114.114.114
-nameserver 114.114.115.115
-nameserver 1.2.4.8
-nameserver 240c::6666
-nameserver 240c::6644" >/etc/resolv.conf
+echo -e "${GREEN}正在修复DNS${RES}"
+
+echo -e "nameserver 8.8.8.8
+nameserver 114.114.114.114" >/run/systemd/resolve/stub-resolv.conf
+
+echo -e "nameserver 8.8.8.8
+nameserver 114.114.114.114" >/etc/resolv.conf
 echo -e "${GREEN}尝试禁用无用检测${RES}"
 ln -s ~/SakiSP-NEXT/sakispnext.sh /usr/bin/sakispnext 2>/dev/null
 chmod 777 /usr/bin/sakispnext 2>/dev/null
@@ -118,7 +114,7 @@ elif [ "$current_distro" = "archarm" ] || [ "$current_distro" = "manjaro" ] || [
     echo -e "${GREEN}执行系统更新${RES}"
     pacman -Syu --noconfirm
     echo -e "${INFO}系统更新完成，正在安装相关依赖...${RES}"
-    pacman -S --noconfirm libnewt adobe-source-han-serif-cn-fonts wqy-zenhei wget git jq curl bc
+    pacman -S --noconfirm libnewt adobe-source-han-serif-cn-fonts wqy-zenhei wget git jq curl bc sudo vim
     echo -e "${SUSSEC}继续后续步骤${RES}"
     echo -e "${INFO}正在配置Arch系统中文环境...${RES}"
     sed -i 's/^#zh_CN.UTF-8 UTF-8/zh_CN.UTF-8 UTF-8/' /etc/locale.gen
@@ -178,7 +174,6 @@ elif [ "$current_distro" != "archarm" ] && [ "$current_distro" != "manjaro" ] &&
     clear
 fi
 
-# SakiSP 安装逻辑（仅 whiptail 可用时执行，无改动）
 if [ $whiptail_available -eq 1 ]; then
     whiptail --title "安装SakiSP" --yesno "是否需要安装SakiSP？该工具可用于很大用途" 10 60
     if [ $? -eq 0 ]; then
@@ -210,6 +205,7 @@ echo -e "\n❓ 是否需要安装 TMOE TOOL？${RES}"
 echo -e "📌 请输入：(y/n)"
 read -r user_choice
 if [[ "$user_choice" =~ ^[Yy]$ ]]; then
+    clear
     echo -e "\n${INFO}🚀 用户选择安装，正在准备启动安装程序...${RES}"
     sleep 2
     sudo bash -c "$(curl -L https://gitee.com/mo2/linux/raw/2/2)"

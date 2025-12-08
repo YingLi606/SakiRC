@@ -37,7 +37,7 @@ startNapCatQQ() {
 			esac
 
 		else
-			echo -e "${WORRY}容器状态该功能只支持Bookworm_Debian_12"
+			echo -e "${WORRY}该功能目前只支持Debian 12 Bookworm"
 			log "容器非目前该功能只支持Debian 12"
 		fi
 	else
