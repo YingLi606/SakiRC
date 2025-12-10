@@ -236,12 +236,19 @@ install_proot() {
 	Proot_os_download_source="https://sgp1lxdmirror01.do.letsbuildthe.cloud/images"
 	clear
 	echo -e "\n\e[92m🎉 \e[1m【选择容器系统类型】\e[0m"
+	sleep 0.1
 	echo -e "\e[91m1. 🍎 Ubuntu\e[0m"
+	sleep 0.1
 	echo -e "\e[93m2. 🍥 Debian\e[0m"
+	sleep 0.1
 	echo -e "\e[95m3. 🥑 Kali\e[0m"
+	sleep 0.1
 	echo -e "\e[96m4. 🍐 Rockylinux\e[0m"
+	sleep 0.1
 	echo -e "\e[92m5. 🥝 CentOS\e[0m"
+	sleep 0.1
 	echo -e "\e[38;5;166m6. 🍇 Arch Linux\e[0m"
+	sleep 0.1
 	echo -e "\e[91m0. 🌚 退出\e[0m"
 	read -p "请输入对应数字选择：" open_proot_os_list
 	case ${open_proot_os_list} in

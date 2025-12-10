@@ -42,7 +42,7 @@ startNapCatQQB | startnQQB)
 	fi
 
 	Linux_menu=$(
-		whiptail --title "SakiSP-NEXT V9.1.8" --menu "请选择功能" 15 60 4 \
+		whiptail --title "SakiSP-NEXT V9.2.0" --menu "请选择功能" 15 60 4 \
 			"1" "🌤 管理mc Server（旧）" \
 		    "2" "🍭 MC服务器管理（新）" \
 			"3" "🤖 QQ机器人" \
@@ -152,7 +152,6 @@ startNapCatQQB | startnQQB)
 		QQBot_menu=$(
 			whiptail --title "选择功能" --menu "请按自己的需求来" 15 60 8 \
 				"1" "管理NapCatQQ" \
-				"2" "管理机器人" \
 				"0" "退出" 3>&1 1>&2 2>&3
 		)
 		case $QQBot_menu in
@@ -180,9 +179,14 @@ startNapCatQQB | startnQQB)
 				startNapCatQQ -B
 				;;
 			4)
-				log "WebUI地址"
-				QQbottk=$(jq -r '.token' /opt/QQ/resources/app/app_launcher/napcat/config/webui.json)
-				echo -e "机器人后台地址: http://127.0.0.1:6099/webui?token=${QQbottk} "
+                log "WebUI地址"
+                WEBUI_CONFIG="${HOME}/Napcat/opt/QQ/resources/app/app_launcher/napcat/config/webui.json"
+                if [ -f "${WEBUI_CONFIG}" ]; then
+                QQbottk=$(jq -r '.token' "${WEBUI_CONFIG}")
+                echo -e "机器人后台地址: http://127.0.0.1:6099/webui?token=${QQbottk} "
+             else
+                echo -e "${ERROR} 文件不存在，请检查NapCat配置路径是否正确"
+    fi
 				hcjx
 				;;
 			*)

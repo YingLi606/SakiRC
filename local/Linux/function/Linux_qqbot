@@ -1,47 +1,66 @@
 installNapCatQQ() {
-	if [ ${system_os_type} = proot ]; then
-		log "系统为proot容器"
-		log "安装NapCatQQ"
-		if [ "${system_os_type2}" = Bookworm_Debian_12 ]; then
-			log "容器为Bookworm_Debian_12下载并安装官方脚本"
-			curl -o napcat.sh https://nclatest.znin.net/NapNeko/NapCat-Installer/main/script/install.sh && sudo bash napcat.sh
-		else
-			echo -e "${WORRY}容器状态该功能只支持Bookworm_Debian_12"
-			log "容器非目前该功能只支持Debian 12"
-		fi
-	else
-		log "系统为非proot容器"
-		curl -o napcat.sh https://nclatest.znin.net/NapNeko/NapCat-Installer/main/script/install.sh && sudo bash napcat.sh
-	fi
-}
-startNapCatQQ() {
-	if [ "${system_os_type}" = "proot" ]; then
-		log "系统为proot容器"
-		log "启动NapCatQQ"
-		if [ "${system_os_type2}" = "Bookworm_Debian_12" ]; then
-			log "启动NapCatQQ"
-			if [ "${QQbot}" = "" ]; then
-				read -e -p "请输入您的QQ号（建议用小号）：" QQbot
-				log "QQbot为空"
-				Modify_the_variable QQbot "${QQbot}" "${HOME}/SakiSP-NEXT/config/config.sh"
-			fi
-			case "${1}" in
-			--Background | -B)
-				log "后台启动NapCatQQ"
-				screen -dmS napcat bash -c "xvfb-run -a ${HOME}/Napcat/opt/QQ/qq --no-sandbox -q ${QQbot}"
-				;;
-			*)
-				log "启动NapCatQQ"
-				xvfb-run -a ${HOME}/Napcat/opt/QQ/qq --no-sandbox "${QQbot}"
-				;;
-			esac
+    show_warning_and_confirm() {
+        clear
+        echo -e "\033[91m⚠️  重要警告 ⚠️\033[0m"
+        echo -e "\033[93m1. 请不要用刚创建的QQ号绑定Napcat机器人，否则极易被风控！\033[0m"
+        echo -e "\033[93m2. 请勿用于非法用途！如账号冻结或发生意外，责任均由使用者自行承担！\033[0m"
 
-		else
-			echo -e "${WORRY}该功能目前只支持Debian 12 Bookworm"
-			log "容器非目前该功能只支持Debian 12"
-		fi
-	else
-		log "系统为非proot容器"
-		# curl -o napcat.sh https://nclatest.znin.net/NapNeko/NapCat-Installer/main/script/install.sh && sudo bash napcat.sh
-	fi
+        for i in {10..1}; do
+            echo -en "\r\033[94m请认真阅读以上内容:，倒计时 ${i} 秒\033[0m"
+            sleep 1
+        done
+        echo -en "\r\033[K"
+
+        echo -e "\033[92m请确认已阅读并同意以上警告（按回车键继续，Ctrl+C取消）\033[0m"
+        read -p ""
+    }
+
+    if [ "${system_os_type}" = proot ]; then
+        show_warning_and_confirm
+        log "系统为proot容器"
+        log "安装NapCatQQ"
+        if [ "${system_os_type2}" = Bookworm_Debian_12 ]; then
+            log "容器为Bookworm_Debian_12下载并安装官方脚本"
+            curl -o napcat.sh https://nclatest.znin.net/NapNeko/NapCat-Installer/main/script/install.sh && sudo bash napcat.sh
+        else
+            echo -e "${WORRY}容器状态该功能只支持Bookworm_Debian_12"
+            clear
+            log "容器非目前该功能只支持Debian 12"
+        fi
+    else
+        show_warning_and_confirm
+        log "系统为非proot容器"
+        curl -o napcat.sh https://nclatest.znin.net/NapNeko/NapCat-Installer/main/script/install.sh && sudo bash napcat.sh
+    fi
+}
+
+startNapCatQQ() {
+    if [ "${system_os_type}" = "proot" ]; then
+        log "系统为proot容器"
+        log "启动NapCatQQ"
+        if [ "${system_os_type2}" = "Bookworm_Debian_12" ]; then
+            log "启动NapCatQQ"
+            if [ "${QQbot}" = "" ]; then
+                read -e -p "请输入您的QQ号（建议用小号）：" QQbot
+                log "QQbot为空"
+                Modify_the_variable QQbot "${QQbot}" "${HOME}/SakiSP-NEXT/config/config.sh"
+            fi
+            case "${1}" in
+            --Background | -B)
+                log "后台启动NapCatQQ"
+                screen -dmS napcat bash -c "xvfb-run -a ${HOME}/Napcat/opt/QQ/qq --no-sandbox -q ${QQbot}"
+                ;;
+            *)
+                log "启动NapCatQQ"
+                xvfb-run -a ${HOME}/Napcat/opt/QQ/qq --no-sandbox "${QQbot}"
+                ;;
+            esac
+        else
+            echo -e "${WORRY}该功能目前只支持Debian 12 Bookworm"
+            log "容器非目前该功能只支持Debian 12"
+        fi
+    else
+        log "系统为非proot容器"
+        curl -o napcat.sh https://nclatest.znin.net/NapNeko/NapCat-Installer/main/script/install.sh && sudo bash napcat.sh
+    fi
 }

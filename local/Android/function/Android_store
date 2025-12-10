@@ -69,10 +69,8 @@ zerotermux_install() {
     aria2c --max-connection-per-server=8 "$DOWNLOAD_URL" -o "$SAVE_PATH"
 
     if [ $? -eq 0 ]; then
-        echo -e "\033[32m✅ 下载成功！正在唤起系统安装程序...（如果没有，可打开MT管理器从下载路径找到即可）\033[0m"
-        echo -e "\033[32m📌请在弹出窗口完成安装，安装后即可启动微信，安装成功后请及时从脚本主页里“垃圾清理”进行删除\033[0m"
+        echo -e "\033[32m✅ 下载成功！在 $HOME/SakiSP-NEXT/app 目录里找到即可\033[0m"
         sleep 3
-        am start -a android.intent.action.VIEW -t application/vnd.android.package-archive -d "file://$SAVE_PATH" > /dev/null 2>&1
     else
         echo -e "\033[31m❌ 下载失败！5秒后退出...\033[0m"
         sleep 5
@@ -101,10 +99,8 @@ qq_install() {
     aria2c --max-connection-per-server=8 "$DOWNLOAD_URL" -o "$SAVE_PATH"
 
     if [ $? -eq 0 ]; then
-        echo -e "\033[32m✅ 下载成功！正在唤起系统安装程序...（如果没有，可打开MT管理器从下载路径找到即可）\033[0m"
-        echo -e "\033[32m📌 请在弹出窗口完成安装，安装后即可启动微信，安装成功后请及时从脚本主页里“垃圾清理”进行删除\\033[0m"
+        echo -e "\033[32m✅ 下载成功！在 $HOME/SakiSP-NEXT/app 目录里找到即可\033[0m"
         sleep 3
-        am start -a android.intent.action.VIEW -t application/vnd.android.package-archive -d "file://$SAVE_PATH" > /dev/null 2>&1
     else
         echo -e "\033[31m❌ 下载失败！5秒后退出...\033[0m"
         sleep 5
@@ -133,10 +129,8 @@ wechat_install() {
     aria2c --max-connection-per-server=8 "$DOWNLOAD_URL" -o "$SAVE_PATH"
 
     if [ $? -eq 0 ]; then
-        echo -e "\033[32m✅ 下载成功！正在唤起系统安装程序...（如果没有，可打开MT管理器从下载路径找到即可）\033[0m"
-        echo -e "\033[32m📌 请在弹出窗口完成安装，安装后即可启动微信，安装成功后请及时从脚本主页里“垃圾清理”进行删除\\033[0m"
+        echo -e "\033[32m✅ 下载成功！在 $HOME/SakiSP-NEXT/app 目录里找到即可\033[0m"
         sleep 3
-        am start -a android.intent.action.VIEW -t application/vnd.android.package-archive -d "file://$SAVE_PATH" > /dev/null 2>&1
     else
         echo -e "\033[31m❌ 下载失败！5秒后退出...\033[0m"
         sleep 5
