@@ -27,6 +27,9 @@ stopMCSManager | stopcsm)
 install_MC_SERVER_NEW | imcsn)
 	INSTALL_MC_SERVER_NEW
 	;;	
+LINUX_SPEED | lsd)
+	LINUX_SPEED
+	;;	
 installNapCatQQ | inQQ)
 	installNapCatQQ
 	;;
@@ -118,7 +121,7 @@ startNapCatQQB | startnQQB)
 
 	2)
 		MCServernew_menu=$(
-			whiptail --title "即将切换" --menu "请确保已安装Java 21" 15 60 8 \
+			whiptail --title "即将切换" --menu "请确保已安装Java" 15 60 8 \
 				"1" "下一步" \
 				"0" "退出" 3>&1 1>&2 2>&3
 		)
@@ -126,7 +129,7 @@ startNapCatQQB | startnQQB)
 		1)
 			log "下一步"
 			MCServeragin_menu=$(
-				whiptail --title "再来一次" --menu "请确保你的系统是Debian,Ubuntu,Kali,GXDE,Deepin,UOS" 15 60 8 \
+				whiptail --title "再来一次" --menu "即将进入" 15 60 8 \
 					"1" "理解确认" \
 					"0" "退出" 3>&1 1>&2 2>&3
 			)
@@ -202,10 +205,38 @@ startNapCatQQB | startnQQB)
 		esac
 		;;
 	4)
-		log "网速测试"
-		Linux_speed
-		;;			
-
+		Linux_Speed_menu=$(
+			whiptail --title "即将切换" --menu "过程可能会消耗流量" 15 60 8 \
+				"1" "下一步" \
+				"0" "退出" 3>&1 1>&2 2>&3
+		)
+		case $Linux_Speed_menu in
+		1)
+			log "下一步"
+			LinuxSpeedagin_menu=$(
+				whiptail --title "再来一次" --menu "即将进入" 15 60 8 \
+					"1" "理解确认" \
+					"0" "退出" 3>&1 1>&2 2>&3
+			)
+			case $LinuxSpeedagin_menu in
+			1)
+				log "理解确认"
+				echo -e "${INFO}正在尝试切换，请稍等"
+				sleep 3
+				clear
+				LINUX_SPEED
+				;;
+			*)
+				exit 1
+				;;
+			esac
+			;;
+		*)
+			echo -e "${RED}QUIT$RES"
+			exit 1
+			;;
+		esac
+		;;
 	D)
 		debuger
 		;;
