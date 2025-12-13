@@ -2,37 +2,142 @@ android_store() {
     CHOICE=$(whiptail --clear --backtitle "DaLongZhuaZi" \
         --title "🐸 Android软件商店（arm64）" \
         --menu "请选择:" 15 60 4 \
-        1 "💻 ZeroTermux-0.118.3.49" \
-        2 "🐧 QQ" \
-        3 "🍃 微信" \
+        1 "🖥 编程及终端代码类" \
+        2 "☁️ 社交软件类" \
+        3 "🤖 AI软件类" \
         4 "🌚 退出" \
+    3>&1 1>&2 2>&3)
+    
+    case $CHOICE in
+        1)
+            log "编程及终端代码类"
+            clear
+            shell_classification
+        ;;
+        2)
+            log "社交软件类"
+            clear
+            social_classification
+        ;;
+        3)
+            log "AI软件类"
+            clear
+            ai_classification
+        ;;        
+        4)
+            log "退出"
+            clear
+            exit 1
+        ;;
+        *)
+            echo "错误提示：选择了未知选项，请重新进入菜单操作"
+            sleep 3
+            clear
+            exit 1
+        ;;
+    esac
+}
+
+shell_classification() {
+    CHOICE=$(whiptail --clear --backtitle "DaLongZhuaZi" \
+        --title "🖥 编程及终端代码类" \
+        --menu "请选择:" 15 60 4 \
+        1 "💻 ZeroTermux-0.118.3.49" \
+        2 "🌚 退出" \
     3>&1 1>&2 2>&3)
     
     case $CHOICE in
         1)
             log "ZeroTermux-0.118.3.49"
             clear
-            echo "您选择了：ZeroTermux-0.118.3.49"
-            sleep 3  
             zerotermux_install
         ;;
         2)
-            log "QQ"
+            log "退出"
             clear
-            echo "您选择了：QQ"
+            exit 1
+        ;;
+        *)
+            echo "错误提示：选择了未知选项，请重新进入菜单操作"
             sleep 3
+            clear
+            exit 1
+        ;;
+    esac
+}
+
+social_classification() {
+    CHOICE=$(whiptail --clear --backtitle "DaLongZhuaZi" \
+        --title "☁️ 社交软件类" \
+        --menu "请选择:" 15 60 4 \
+        1 "🐧 QQ" \
+        2 "🍃 微信" \
+        3 "🌚 退出" \
+    3>&1 1>&2 2>&3)
+    
+    case $CHOICE in
+        1)
+            log "QQ"
             clear
             qq_install
         ;;
-        3)
+        2)
             log "微信"
-            clear
-            echo "您选择了：微信"
-            sleep 3
             clear
             wechat_install
         ;;
+        3)
+            log "TIM"
+            clear
+            tim_install
+        ;;        
         4)
+            log "退出"
+            clear
+            exit 1
+        ;;
+        *)
+            echo "错误提示：选择了未知选项，请重新进入菜单操作"
+            sleep 3
+            clear
+            exit 1
+        ;;
+    esac
+}
+
+ai_classification() {
+    CHOICE=$(whiptail --clear --backtitle "DaLongZhuaZi" \
+        --title "🤖 AI软件类" \
+        --menu "请选择:" 15 60 4 \
+        1 "🙎🏻‍♀️ 豆包" \
+        2 "🌳 元宝" \
+        3 "🔮 AutoGLM" \
+        4 "⚗️ 千问" \
+        5 "🌚 退出" \
+    3>&1 1>&2 2>&3)
+    
+    case $CHOICE in
+        1)
+            log "豆包"
+            clear
+            doubao_install
+        ;;
+        2)
+            log "元宝"
+            clear
+            hunyuan_install
+        ;;
+        3)
+            log "AutoGLM"
+            clear
+            autoglm_install
+        ;;
+        4)
+            log "千问"
+            clear
+            qwen_install
+        ;;        
+        5)
             log "退出"
             clear
             echo "退出"
@@ -91,8 +196,8 @@ qq_install() {
         echo -e "\033[34m检测到app文件夹不存在，已自动创建：$APP_DIR\033[0m"
     fi
     
-    local DOWNLOAD_URL="https://downv6.ydcdn.tcdnos.com/qqweb/QQ_1/android_apk/Android_9.2.20_64.apk"
-    local SAVE_PATH="SakiSP-NEXT/app/Android_9.2.20_64.apk"
+    local DOWNLOAD_URL="https://downv6.qq.com/qqweb/QQ_1/android_apk/9.2.50_ccff0d6304664ea9.apk"
+    local SAVE_PATH="SakiSP-NEXT/app/9.2.50_ccff0d6304664ea9.apk"
 
     echo -e "\033[36m=== 开始多线程下载 QQ 安装包 ===\033[0m"
     echo -e "\033[36m保存路径：$SAVE_PATH\033[0m"
@@ -121,10 +226,160 @@ wechat_install() {
         echo -e "\033[34m检测到app文件夹不存在，已自动创建：$APP_DIR\033[0m"
     fi
     
-    local DOWNLOAD_URL="https://d2ea0e6d34cd85f42e3e4f2e604513263f41296341d1faae.dlied1.cdntips.net/dldir1v6.qq.com/weixin/android/weixin8064android2940_0x28004033_arm64_1.apk"
-    local SAVE_PATH="SakiSP-NEXT/app/weixin8064android2940_0x28004033_arm64_1.apk"
+    local DOWNLOAD_URL="https://dldir1v6.qq.com/weixin/android/weixin8066android2980_0x28004234_arm64.apk"
+    local SAVE_PATH="SakiSP-NEXT/app/weixin8066android2980_0x28004234_arm64.apk"
 
     echo -e "\033[36m=== 开始多线程下载 微信 安装包 ===\033[0m"
+    echo -e "\033[36m保存路径：$SAVE_PATH\033[0m"
+    aria2c --max-connection-per-server=8 "$DOWNLOAD_URL" -o "$SAVE_PATH"
+
+    if [ $? -eq 0 ]; then
+        echo -e "\033[32m✅ 下载成功！在 $HOME/SakiSP-NEXT/app 目录里找到即可\033[0m"
+        sleep 3
+    else
+        echo -e "\033[31m❌ 下载失败！5秒后退出...\033[0m"
+        sleep 5
+        clear
+        exit 1
+    fi
+}
+
+tim_install() {
+    if ! command -v aria2c &> /dev/null; then
+        echo -e "\033[34m检测到未安装aria2c，正在自动安装...\033[0m"
+        pkg install -y aria2 > /dev/null 2>&1
+    fi
+
+    local APP_DIR="$HOME/SakiSP-NEXT/app"
+    if [ ! -d "$APP_DIR" ]; then
+        mkdir -p "$APP_DIR"
+        echo -e "\033[34m检测到app文件夹不存在，已自动创建：$APP_DIR\033[0m"
+    fi
+    
+    local DOWNLOAD_URL="https://downv6.ydcdn.tcdnos.com/qqweb/QQ_1/android_apk/tim_4.1.0.4050.apk"
+    local SAVE_PATH="SakiSP-NEXT/app/tim_4.1.0.4050.apk"
+
+    echo -e "\033[36m=== 开始多线程下载 TIM 安装包 ===\033[0m"
+    echo -e "\033[36m保存路径：$SAVE_PATH\033[0m"
+    aria2c --max-connection-per-server=8 "$DOWNLOAD_URL" -o "$SAVE_PATH"
+
+    if [ $? -eq 0 ]; then
+        echo -e "\033[32m✅ 下载成功！在 $HOME/SakiSP-NEXT/app 目录里找到即可\033[0m"
+        sleep 3
+    else
+        echo -e "\033[31m❌ 下载失败！5秒后退出...\033[0m"
+        sleep 5
+        clear
+        exit 1
+    fi
+}
+
+doubao_install() {
+    if ! command -v aria2c &> /dev/null; then
+        echo -e "\033[34m检测到未安装aria2c，正在自动安装...\033[0m"
+        pkg install -y aria2 > /dev/null 2>&1
+    fi
+
+    local APP_DIR="$HOME/SakiSP-NEXT/app"
+    if [ ! -d "$APP_DIR" ]; then
+        mkdir -p "$APP_DIR"
+        echo -e "\033[34m检测到app文件夹不存在，已自动创建：$APP_DIR\033[0m"
+    fi
+   
+    local DOWNLOAD_URL="https://lf9-apk.ugapk.cn/package/apk/nova_ai/22629_11040001/nova_ai_46006059a_v22629_11040001_6fb4_1765275161.apk"
+    local SAVE_PATH="SakiSP-NEXT/app/nova_ai_46006059a_v22629_11040001_6fb4_1765275161.apk"
+
+    echo -e "\033[36m=== 开始多线程下载 豆包 安装包 ===\033[0m"
+    echo -e "\033[36m保存路径：$SAVE_PATH\033[0m"
+    aria2c --max-connection-per-server=8 "$DOWNLOAD_URL" -o "$SAVE_PATH"
+
+    if [ $? -eq 0 ]; then
+        echo -e "\033[32m✅ 下载成功！在 $HOME/SakiSP-NEXT/app 目录里找到即可\033[0m"
+        sleep 3
+    else
+        echo -e "\033[31m❌ 下载失败！5秒后退出...\033[0m"
+        sleep 5
+        clear
+        exit 1
+    fi
+}
+
+hunyuan_install() {
+    if ! command -v aria2c &> /dev/null; then
+        echo -e "\033[34m检测到未安装aria2c，正在自动安装...\033[0m"
+        pkg install -y aria2 > /dev/null 2>&1
+    fi
+
+    local APP_DIR="$HOME/SakiSP-NEXT/app"
+    if [ ! -d "$APP_DIR" ]; then
+        mkdir -p "$APP_DIR"
+        echo -e "\033[34m检测到app文件夹不存在，已自动创建：$APP_DIR\033[0m"
+    fi
+   
+    local DOWNLOAD_URL="https://cdn-hybrid-prod.hunyuan.tencent.com/Android/business/yuanbao-release-prod-signed-5040.apk"
+    local SAVE_PATH="SakiSP-NEXT/app/yuanbao-release-prod-signed-5040.apk"
+
+    echo -e "\033[36m=== 开始多线程下载 元宝 安装包 ===\033[0m"
+    echo -e "\033[36m保存路径：$SAVE_PATH\033[0m"
+    aria2c --max-connection-per-server=8 "$DOWNLOAD_URL" -o "$SAVE_PATH"
+
+    if [ $? -eq 0 ]; then
+        echo -e "\033[32m✅ 下载成功！在 $HOME/SakiSP-NEXT/app 目录里找到即可\033[0m"
+        sleep 3
+    else
+        echo -e "\033[31m❌ 下载失败！5秒后退出...\033[0m"
+        sleep 5
+        clear
+        exit 1
+    fi
+}
+
+autoglm_install() {
+    if ! command -v aria2c &> /dev/null; then
+        echo -e "\033[34m检测到未安装aria2c，正在自动安装...\033[0m"
+        pkg install -y aria2 > /dev/null 2>&1
+    fi
+
+    local APP_DIR="$HOME/SakiSP-NEXT/app"
+    if [ ! -d "$APP_DIR" ]; then
+        mkdir -p "$APP_DIR"
+        echo -e "\033[34m检测到app文件夹不存在，已自动创建：$APP_DIR\033[0m"
+    fi
+   
+    local DOWNLOAD_URL="https://autoglm.aminer.cn/web/deep_research/apk/autoglm.apk"
+    local SAVE_PATH="SakiSP-NEXT/app/autoglm.apk"
+
+    echo -e "\033[36m=== 开始多线程下载 AutoGLM 安装包 ===\033[0m"
+    echo -e "\033[36m保存路径：$SAVE_PATH\033[0m"
+    aria2c --max-connection-per-server=8 "$DOWNLOAD_URL" -o "$SAVE_PATH"
+
+    if [ $? -eq 0 ]; then
+        echo -e "\033[32m✅ 下载成功！在 $HOME/SakiSP-NEXT/app 目录里找到即可\033[0m"
+        sleep 3
+    else
+        echo -e "\033[31m❌ 下载失败！5秒后退出...\033[0m"
+        sleep 5
+        clear
+        exit 1
+    fi
+}
+
+qwen_install() {
+    if ! command -v aria2c &> /dev/null; then
+        echo -e "\033[34m检测到未安装aria2c，正在自动安装...\033[0m"
+        pkg install -y aria2 > /dev/null 2>&1
+    fi
+
+    local APP_DIR="$HOME/SakiSP-NEXT/app"
+    if [ ! -d "$APP_DIR" ]; then
+        mkdir -p "$APP_DIR"
+        echo -e "\033[34m检测到app文件夹不存在，已自动创建：$APP_DIR\033[0m"
+    fi
+   
+    local DOWNLOAD_URL="https://download.qwen.ai/android/QwenChat_release.apk"
+    local SAVE_PATH="SakiSP-NEXT/app/QwenChat_release.apk"
+
+    echo -e "\033[36m=== 开始多线程下载 千问 安装包 ===\033[0m"
     echo -e "\033[36m保存路径：$SAVE_PATH\033[0m"
     aria2c --max-connection-per-server=8 "$DOWNLOAD_URL" -o "$SAVE_PATH"
 

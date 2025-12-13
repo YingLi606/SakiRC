@@ -88,7 +88,7 @@ open_ubuntu_os_list() {
 	sleep 0.1
 	echo -e "\e[93m2. 🟡 Noble（24.04 LTS）\e[0m"
 	sleep 0.1
-	echo -e "\e[94m3. 🔵 Plucky（25.04 LTS）\e[0m"
+	echo -e "\e[94m3. 🔵 Plucky（25.04）\e[0m"
 	sleep 0.1
 	echo -e "\e[91m0. 🔴 退出\e[0m"
 	sleep 0.1
@@ -155,21 +155,21 @@ open_centos_os_list() {
 	sleep 0.1
 	echo -e "\n\e[90m📌 \e[1m【选择CentOS系统版本】\e[0m"
 	sleep 0.1
-	echo -e "\e[92m1. 🟢 centos_10-Stream\e[0m"
+	echo -e "\e[92m1. 🟢 CentOS_10-Stream\e[0m"
 	sleep 0.1
-	echo -e "\e[93m2. 🟡 centos_9-Stream\e[0m"
+	echo -e "\e[93m2. 🟡 CentOS_9-Stream\e[0m"
 	sleep 0.1
 	echo -e "\e[91m0. 🔴 退出\e[0m"
 	sleep 0.1
 	read -p "请输入对应数字选择：" centos_os_list
 	case ${centos_os_list} in
 	1)
-		os_name=centos_10-Stream
+		os_name=CentOS_10-Stream
 		Download_proot_NAME=$(curl -s "${Proot_os_download_source}/centos/10-Stream/${archurl}/default/" | grep -oP '<a href="[^"]*">\K[^<]*' | sed -n '2s|/$||p')
 		Download_proot_url=${Proot_os_download_source}/centos/10-Stream/${archurl}/default/${Download_proot_NAME}/rootfs.tar.xz
 		;;
 	2)
-		os_name=centos_9-Stream
+		os_name=CentOS_9-Stream
 		Download_proot_NAME=$(curl -s "${Proot_os_download_source}/centos/9-Stream/${archurl}/default/" | grep -oP '<a href="[^"]*">\K[^<]*' | sed -n '2s|/$||p')
 		Download_proot_url=${Proot_os_download_source}/centos/9-Stream/${archurl}/default/${Download_proot_NAME}/rootfs.tar.xz
 		;;
@@ -191,7 +191,7 @@ open_archlinux_os_list() {
 	read -p "请输入对应数字选择：" archlinux_os_list
 	case ${archlinux_os_list} in
     1)
-		os_name=archlinux
+		os_name=ArchLinux
 		Download_proot_NAME=$(curl -s --connect-timeout 10 --max-time 20 "${Proot_os_download_source}/archlinux/current/${archurl}/default/" | grep -oP '<a href="[^"]*">\K[^<]*' | sed -n '2s|/$||p')
 		Download_proot_url=${Proot_os_download_source}/archlinux/current/${archurl}/default/${Download_proot_NAME}/rootfs.tar.xz
 		download_file="${HOME}/SakiSP-NEXT/download/${os_name}.tar.xz"
@@ -294,7 +294,7 @@ install_proot() {
 				log "下载成功：$download_file"
 				break
 			else
-				echo -e "\e[93m⚠️  警告：请检查您的网络环境 \e[0m"
+				echo -e "\e[93m⚠️  警告：下载失败，尝试备用下载 \e[0m"
 				log "下载失败：$download_file"
 				if [ $counter -eq 0 ]; then
 					Download_proot_url="https://dl.gancmcs.top/${Download_proot_url}"
@@ -518,7 +518,7 @@ rm_proot() {
 			exit 1
 		fi
 		if [ "$user_input" -eq "$correct_result" ]; then
-			echo -e "\e[92m✅ 验证完成！您已证明是人类，继续操作 \e[0m"
+			echo -e "\e[92m✅ 验证成功！继续操作 \e[0m"
 			sleep 2
 			chmod 777 -R "${HOME}/.termux/SakiSP-NEXT/proot/${os_name}/"
 			rm -rfv "${HOME}/.termux/SakiSP-NEXT/proot/${os_name}/"

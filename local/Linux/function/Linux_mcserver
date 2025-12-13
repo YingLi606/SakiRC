@@ -246,7 +246,7 @@ rm_MC_SERVER() {
 			exit 1
 		fi
 		if [ "$user_input" -eq "$correct_result" ]; then
-			echo -e "\e[92m✅ 验证完成，您已证明是人类，继续操作\e[0m"
+			echo -e "\e[92m✅ 验证成功！继续操作\e[0m"
 			sleep 2
 			rm -rfv "${HOME}/.termux/SakiSP-NEXT/MCserver/${rm_MC_SERVER_class}/${list_items[$((user_choice - 1))]}"
 			log "删除完成"
