@@ -30,7 +30,7 @@ android_store() {
             exit 1
         ;;
         *)
-            echo "错误提示：选择了未知选项，请重新进入菜单操作"
+            echo "${ERROR} 选择了未知选项，请重新进入菜单操作"
             sleep 3
             clear
             exit 1
@@ -58,7 +58,7 @@ shell_classification() {
             exit 1
         ;;
         *)
-            echo "错误提示：选择了未知选项，请重新进入菜单操作"
+            echo "${ERROR} 选择了未知选项，请重新进入菜单操作"
             sleep 3
             clear
             exit 1
@@ -72,7 +72,8 @@ social_classification() {
         --menu "请选择:" 15 60 4 \
         1 "🐧 QQ" \
         2 "🍃 微信" \
-        3 "🌚 退出" \
+        3 "💎 TIM" \
+        4 "🌚 退出" \
     3>&1 1>&2 2>&3)
     
     case $CHOICE in
@@ -97,7 +98,7 @@ social_classification() {
             exit 1
         ;;
         *)
-            echo "错误提示：选择了未知选项，请重新进入菜单操作"
+            echo "${ERROR} 选择了未知选项，请重新进入菜单操作"
             sleep 3
             clear
             exit 1
@@ -146,7 +147,7 @@ ai_classification() {
             exit 1
         ;;
         *)
-            echo "错误提示：选择了未知选项，请重新进入菜单操作"
+            echo "${ERROR} 选择了未知选项，请重新进入菜单操作"
             sleep 3
             clear
             exit 1
