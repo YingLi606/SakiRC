@@ -34,7 +34,7 @@ detect_package_manager() {
         "fedora")
             echo "dnf"
             ;;
-        "archarm"|"manjaro"|"endeavouros")
+        "archarm"|"archamd"|"manjaro"|"endeavouros")
             echo "pacman"
             ;;
         "opensuse"|"suse")
@@ -110,9 +110,9 @@ if [ "$current_distro" = "ubuntu" ] || [ "$current_distro" = "debian" ] || [ "$c
             echo -e "${ERROR}whiptail 安装失败${RES}"
         fi
     fi
-elif [ "$current_distro" = "archarm" ] || [ "$current_distro" = "manjaro" ] || [ "$current_distro" = "endeavouros" ]; then
-    echo -e "${GREEN}执行系统更新${RES}"
-    pacman -Syu --noconfirm
+elif [ "$current_distro" = "archarm" ] || [ "$current_distro" = "archamd" ] || [ "$current_distro" = "manjaro" ] || [ "$current_distro" = "endeavouros" ]; then
+    echo -e "${GREEN}执行系统更新，下次请执行sudo pacman -Syu --disable-sandbox（需要安装的软件包）${RES}"
+    sudo pacman -Syu --disable-sandbox --noconfirm
     echo -e "${INFO}系统更新完成，正在安装相关依赖...${RES}"
     pacman -S --noconfirm libnewt adobe-source-han-serif-cn-fonts wqy-zenhei wget git jq curl bc sudo vim
     echo -e "${SUSSEC}继续后续步骤${RES}"
@@ -132,7 +132,7 @@ else
 fi
 
 
-if [ "$current_distro" != "archarm" ] && [ "$current_distro" != "manjaro" ] && [ "$current_distro" != "endeavouros" ]; then
+if [ "$current_distro" != "archarm" ] && [ "$current_distro" != "archamd" ] && [ "$current_distro" != "manjaro" ] && [ "$current_distro" != "endeavouros" ]; then
     if [ "$current_distro" = "ubuntu" ] || [ "$current_distro" = "debian" ] || [ "$current_distro" = "kali" ] || [ "$current_distro" = "centos" ] || [ "$current_distro" = "rocky" ]; then
         echo -e "${INFO}正在安装对应依赖...${RES}"
         self_install $package_manager language-pack-zh-hans
@@ -151,7 +151,7 @@ fi
 
 echo -e "${INFO}准备检测系统发行版${RES}"
 sleep 2
-if [ -f /etc/os-release ] && [ "$current_distro" != "archarm" ] && [ "$current_distro" != "manjaro" ] && [ "$current_distro" != "endeavouros" ]; then
+if [ -f /etc/os-release ] && [ "$current_distro" != "archarm" ] && [ "$current_distro" != "archamd" ] && [ "$current_distro" != "manjaro" ] && [ "$current_distro" != "endeavouros" ]; then
     . /etc/os-release
     case $ID in
         ubuntu|debian|kali)
@@ -174,7 +174,7 @@ if [ -f /etc/os-release ] && [ "$current_distro" != "archarm" ] && [ "$current_d
             clear
             ;;
     esac
-elif [ "$current_distro" != "archarm" ] && [ "$current_distro" != "manjaro" ] && [ "$current_distro" != "endeavouros" ]; then
+elif [ "$current_distro" != "archarm" ] && [ "$current_distro" != "archamd" ] && [ "$current_distro" != "manjaro" ] && [ "$current_distro" != "endeavouros" ]; then
     echo -e "${ERROR} 无法检测系统发行版，跳过语言配置步骤${RES}"
     sleep 2
     clear
