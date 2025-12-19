@@ -110,7 +110,7 @@ if [ "$current_distro" = "ubuntu" ] || [ "$current_distro" = "debian" ] || [ "$c
             echo -e "${ERROR}whiptail 安装失败${RES}"
         fi
     fi
-elif [ "$current_distro" = "archarm" ] || [ "$current_distro" = "manjaro" ] || [ "$current_distro" = "endeavouros" ] || [ "$current_distro" = "archamd" ]; then
+elif [ "$current_distro" = "archarm" ] || [ "$current_distro" = "manjaro" ] || [ "$current_distro" = "endeavouros" ]; then
     echo -e "${GREEN}执行系统更新${RES}"
     pacman -Syu --noconfirm
     echo -e "${INFO}系统更新完成，正在安装相关依赖...${RES}"
