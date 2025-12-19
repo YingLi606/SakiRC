@@ -182,7 +182,7 @@ open_centos_os_list() {
 open_archlinux_os_list() {
 	clear
 	sleep 0.1
-	echo -e "\n\e[90m📌 \e[1m【选择Arch Linux系统版本,目前仅支持arm64架构，安装过程速度可能较慢，建议提前准备好魔法上网】\e[0m"
+	echo -e "\n\e[90m📌 \e[1m【选择Arch Linux系统版本，安装过程速度可能较慢，建议提前准备好魔法上网】\e[0m"
 	sleep 0.1
 	echo -e "\e[95m1.🟣 Arch\e[0m"
 	sleep 0.1
