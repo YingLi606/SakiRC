@@ -1,5 +1,5 @@
 {
-    "version": "1.0.0",
+    "version": "1.0.1",
     "git_clone": "YingLi606/SakiRC",
-    "description": "1.SakiSP-NEXT新世界全新升级为SakiRC，新起点，再出发！2.优化稳定性"
+    "description": "1.修复安装Arch Linux系统Proot容器中出现内核不支持Landlock安全沙箱特性问题! 新起点，再出发！"
 }

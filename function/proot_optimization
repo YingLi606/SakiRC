@@ -114,7 +114,7 @@ elif [ "$current_distro" = "archarm" ] || [ "$current_distro" = "archamd" ] || [
     echo -e "${GREEN}执行系统更新，下次请执行sudo pacman -Syu --disable-sandbox（需要安装的软件包）${RES}"
     sudo pacman -Syu --disable-sandbox --noconfirm
     echo -e "${INFO}系统更新完成，正在安装相关依赖...${RES}"
-    pacman -S --noconfirm libnewt adobe-source-han-serif-cn-fonts wqy-zenhei wget git jq curl bc sudo vim
+    pacman -S --disable-sandbox --noconfirm libnewt adobe-source-han-serif-cn-fonts wqy-zenhei wget git jq curl bc sudo vim
     echo -e "${SUSSEC}继续后续步骤${RES}"
     echo -e "${INFO}正在配置Arch系统中文环境...${RES}"
     sed -i 's/^#zh_CN.UTF-8 UTF-8/zh_CN.UTF-8 UTF-8/' /etc/locale.gen
