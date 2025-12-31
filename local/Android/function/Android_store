@@ -1,6 +1,6 @@
 android_store() {
     CHOICE=$(whiptail --clear --backtitle "DaLongZhuaZi" \
-        --title "🐸 Android软件商店（arm64）" \
+        --title "🐸 Android软件商店（Beta arm64）" \
         --menu "请选择:" 15 60 4 \
         1 "🖥 编程及终端代码类" \
         2 "☁️ 社交软件类" \
@@ -113,8 +113,7 @@ ai_classification() {
         1 "🙎🏻‍♀️ 豆包" \
         2 "🌳 元宝" \
         3 "🔮 AutoGLM" \
-        4 "⚗️ 千问" \
-        5 "🌚 退出" \
+        4 "🌚 退出" \
     3>&1 1>&2 2>&3)
     
     case $CHOICE in
@@ -134,11 +133,6 @@ ai_classification() {
             autoglm_install
         ;;
         4)
-            log "千问"
-            clear
-            qwen_install
-        ;;        
-        5)
             log "退出"
             clear
             echo "退出"
@@ -197,8 +191,8 @@ qq_install() {
         echo -e "\033[34m检测到app文件夹不存在，已自动创建：$APP_DIR\033[0m"
     fi
     
-    local DOWNLOAD_URL="https://downv6.qq.com/qqweb/QQ_1/android_apk/9.2.50_ccff0d6304664ea9.apk"
-    local SAVE_PATH="SakiRC/app/9.2.50_ccff0d6304664ea9.apk"
+    local DOWNLOAD_URL="https://downv6.bsy.tcdnos.com/qqweb/QQ_1/android_apk/9.2.55_8ad932464eb5e30b.apk"
+    local SAVE_PATH="SakiRC/app/9.2.55_8ad932464eb5e30b.apk"
 
     echo -e "\033[36m=== 开始多线程下载 QQ 安装包 ===\033[0m"
     echo -e "\033[36m保存路径：$SAVE_PATH\033[0m"
@@ -227,8 +221,8 @@ wechat_install() {
         echo -e "\033[34m检测到app文件夹不存在，已自动创建：$APP_DIR\033[0m"
     fi
     
-    local DOWNLOAD_URL="https://dldir1v6.qq.com/weixin/android/weixin8066android2980_0x28004234_arm64.apk"
-    local SAVE_PATH="SakiRC/app/weixin8066android2980_0x28004234_arm64.apk"
+    local DOWNLOAD_URL="https://d56416180f4bec475f131187642c8663b337d15b4be9849e.dlied1.cdntips.net/dldir1v6.qq.com/weixin/android/weixin8067android3000_0x28004333_arm64.apk"
+    local SAVE_PATH="SakiRC/app/weixin8067android3000_0x28004333_arm64.apk"
 
     echo -e "\033[36m=== 开始多线程下载 微信 安装包 ===\033[0m"
     echo -e "\033[36m保存路径：$SAVE_PATH\033[0m"
@@ -351,36 +345,6 @@ autoglm_install() {
     local SAVE_PATH="SakiRC/app/autoglm.apk"
 
     echo -e "\033[36m=== 开始多线程下载 AutoGLM 安装包 ===\033[0m"
-    echo -e "\033[36m保存路径：$SAVE_PATH\033[0m"
-    aria2c --max-connection-per-server=8 "$DOWNLOAD_URL" -o "$SAVE_PATH"
-
-    if [ $? -eq 0 ]; then
-        echo -e "\033[32m✅ 下载成功！在 $HOME/SakiRC/app 目录里找到即可\033[0m"
-        sleep 3
-    else
-        echo -e "\033[31m❌ 下载失败！5秒后退出...\033[0m"
-        sleep 5
-        clear
-        exit 1
-    fi
-}
-
-qwen_install() {
-    if ! command -v aria2c &> /dev/null; then
-        echo -e "\033[34m检测到未安装aria2c，正在自动安装...\033[0m"
-        pkg install -y aria2 > /dev/null 2>&1
-    fi
-
-    local APP_DIR="$HOME/SakiRC/app"
-    if [ ! -d "$APP_DIR" ]; then
-        mkdir -p "$APP_DIR"
-        echo -e "\033[34m检测到app文件夹不存在，已自动创建：$APP_DIR\033[0m"
-    fi
-   
-    local DOWNLOAD_URL="https://download.qwen.ai/android/QwenChat_release.apk"
-    local SAVE_PATH="SakiRC/app/QwenChat_release.apk"
-
-    echo -e "\033[36m=== 开始多线程下载 千问 安装包 ===\033[0m"
     echo -e "\033[36m保存路径：$SAVE_PATH\033[0m"
     aria2c --max-connection-per-server=8 "$DOWNLOAD_URL" -o "$SAVE_PATH"
 

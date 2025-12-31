@@ -45,9 +45,9 @@ startNapCatQQB | startnQQB)
 	fi
 
 	Linux_menu=$(
-		whiptail --title "SakiRC V2.0.0" --menu "请选择功能" 15 60 4 \
-			"1" "🌤 管理mc Server（旧）" \
-		    "2" "🍭 MC服务器管理（新）" \
+		whiptail --title "SakiRC V2.0.5" --menu "请选择功能" 15 60 4 \
+			"1" "💎 管理mc Server（旧）" \
+		    "2" "⭐️ MC服务器管理（新）" \
 			"3" "🤖 QQ机器人" \
 			"4" "🚀 网速测试" \
 			"0" "🌚 退出" \
@@ -76,7 +76,7 @@ startNapCatQQB | startnQQB)
 		1)
 			log "安装MC SERVER"
 			clear
-			echo -e "\033[34m⚠️温馨提示：目前不再处理此旧版功能，安装或启动过程中可能会出现不可预估的错误，建议您慎重考虑！\033[0m"
+			echo -e "\033[34m⚠️ 温馨提示：目前不再处理此旧版功能，安装或启动过程中可能会出现不可预估的错误，建议您慎重考虑！\033[0m"
 			sleep 3
 			clear
 			install_MC_SERVER_MENU_OLD

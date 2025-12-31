@@ -1,6 +1,6 @@
 mkdir -p "${HOME}/.termux/SakiRC/MCserver"
 download_JAVA() {
-	echo "请选择要安装的java版本（支持多选，用空格分隔）:"
+	echo "请选择要安装的Java版本（支持多选，用空格分隔）:"
 	options=("quit" $(apt list openjdk-*-jdk 2>/dev/null | awk -F'/' '{print $1}' | grep '^openjdk'))
 	for i in ${!options[@]}; do
 		echo "$i. ${options[$i]}"

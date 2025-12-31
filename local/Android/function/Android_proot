@@ -88,8 +88,6 @@ open_ubuntu_os_list() {
 	sleep 0.1
 	echo -e "\e[93m2. 🟡 Noble（24.04 LTS）\e[0m"
 	sleep 0.1
-	echo -e "\e[94m3. 🔵 Plucky（25.04）\e[0m"
-	sleep 0.1
 	echo -e "\e[91m0. 🔴 退出\e[0m"
 	sleep 0.1
 	read -p "请输入对应数字选择：" ubuntu_os_list
@@ -103,11 +101,6 @@ open_ubuntu_os_list() {
 		os_name=Noble_Ubuntu_24.04
 		Download_proot_NAME=$(curl -s "${Proot_os_download_source}/ubuntu/noble/${archurl}/default/" | grep -oP '<a href="[^"]*">\K[^<]*' | sed -n '2s|/$||p')
 		Download_proot_url=${Proot_os_download_source}/ubuntu/noble/${archurl}/default/${Download_proot_NAME}/rootfs.tar.xz
-		;;
-	3)
-		os_name=Plucky_Ubuntu_25.04
-		Download_proot_NAME=$(curl -s "${Proot_os_download_source}/ubuntu/plucky/${archurl}/default/" | grep -oP '<a href="[^"]*">\K[^<]*' | sed -n '2s|/$||p')
-		Download_proot_url=${Proot_os_download_source}/ubuntu/plucky/${archurl}/default/${Download_proot_NAME}/rootfs.tar.xz
 		;;
 	*)
 		exit 1

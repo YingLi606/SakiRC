@@ -13,6 +13,7 @@ while true; do
             echo -e "\033[1;36m ✅ 正在打开 Termux 换源工具 \033[0m"
             echo -e "\033[1;34m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
             sleep 3
+            clear
             termux-change-repo
             ;;
         2)
@@ -21,6 +22,7 @@ while true; do
             echo -e "\033[1;32m ✅ 正在授予 Termux 存储权限 \033[0m"
             echo -e "\033[1;34m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
             sleep 3
+            clear
             termux-setup-storage
             ;;
         0)
